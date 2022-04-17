@@ -1,4 +1,5 @@
 package com.hspedu.qqserver.service;
+
 import com.hspedu.qqcommon.Message;
 import com.hspedu.qqcommon.MessageType;
 import com.hspedu.qqcommon.User;
@@ -8,7 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * this is server, listening at 9999 port, waiting client connect, keep connecting
@@ -16,7 +17,8 @@ import java.util.HashMap;
 public class QQServer {
     private ServerSocket ss = null;
     //create a collections store multiple users, if those users login, consider valid
-    private static HashMap<String, User> validUsers = new HashMap<String, User>();
+    //ConcurrentHashMap is
+    private static ConcurrentHashMap<String, User> validUsers = new ConcurrentHashMap<String, User>();
 
 
     static  { //static block initialize validUsers

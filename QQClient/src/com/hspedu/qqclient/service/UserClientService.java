@@ -54,4 +54,40 @@ public class UserClientService {
 
         return b;
     }
+
+    //request server for online users
+    public void onlineFriendList() {
+        //send message, type is MESSAGE_GET_ONLINE_FRIEND
+        Message message = new Message();
+        message.setMesType(MessageType.MESSAGE_GET_ONLINE_FRIEND);
+        message.setSender(u.getUserId());
+        //send to server
+        try {
+            //need to get ObjectOutputStream of current socket
+            ObjectOutputStream oos =
+                    new ObjectOutputStream(ManageClientConnectServerThread.getClientConnectServerThread(u.getUserId()).getSocket().getOutputStream());
+            oos.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //exit client, send message to server to exit system
+    public void logOut() {
+        Message message = new Message();
+        message.setMesType(MessageType.MESSAGE_CLIENT_EXIT);
+        message.setSender(u.getUserId()); //must infer which client userid
+
+        //send message
+        try {
+            ObjectOutputStream oos =
+                    new ObjectOutputStream(ManageClientConnectServerThread.getClientConnectServerThread(u.getUserId()).getSocket().getOutputStream());
+            oos.writeObject(message);
+            System.out.println(u.getUserId() + " exit system");
+            System.exit(0); //close application
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

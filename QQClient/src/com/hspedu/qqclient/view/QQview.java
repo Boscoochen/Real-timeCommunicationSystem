@@ -47,7 +47,8 @@ public class QQview {
                             key = Utility.readString(1);
                             switch (key) {
                                 case "1":
-                                    System.out.println("Display A List Of Online Users");
+//                                    System.out.println("Display A List Of Online Users");
+                                    userClientService.onlineFriendList();
                                     break;
                                 case "2":
                                     System.out.println("Group Sending Message");
@@ -59,7 +60,8 @@ public class QQview {
                                     System.out.println("Send file");
                                     break;
                                 case "9":
-                                    System.out.println("Quit System");
+                                    //call method, tell server to exit system
+                                    userClientService.logOut();
                                     loop = false;
                                     break;
                             }
