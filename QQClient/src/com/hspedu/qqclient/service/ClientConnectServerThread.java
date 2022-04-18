@@ -34,7 +34,12 @@ public class ClientConnectServerThread extends Thread{
                         System.out.println("User: " + onlineUsers[i]);
                     }
 
-                } else {
+                } else if(message.getMesType().equals(MessageType.MESSAGE_COMM_MES)) { //common message
+                    //display forward message from server to console
+                    System.out.println("\n" + message.getSendTime() + ": " + message.getSender() + " to " + message.getGetter() + " message: " + message.getContent());
+
+                }
+                else {
                     System.out.println("Other types of message, do nothing temporary...");
                 }
             } catch (Exception e) {

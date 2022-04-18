@@ -1,6 +1,7 @@
 package com.hspedu.qqclient.view;
 
 
+import com.hspedu.qqclient.service.MessageClientService;
 import com.hspedu.qqclient.service.UserClientService;
 import com.hspedu.qqclient.utils.Utility;
 import com.hspedu.qqcommon.User;
@@ -11,7 +12,8 @@ import com.hspedu.qqcommon.User;
 public class QQview {
     private boolean loop = true; // control display menu
     private String key = "";
-    private UserClientService userClientService= new UserClientService(); //object is used to login/register user
+    private UserClientService userClientService = new UserClientService(); //object is used to login/register user
+    private MessageClientService messageClientService = new MessageClientService(); //for private/group chatting
 
     public static void main(String[] args) {
         new QQview().mainMenu();
@@ -54,7 +56,12 @@ public class QQview {
                                     System.out.println("Group Sending Message");
                                     break;
                                 case "3":
-                                    System.out.println("Send A Private Chat Message");
+                                    System.out.println("Please enter userId you want to chat with(online): ");
+                                    String getterId = Utility.readString(50);
+                                    System.out.println("Please enter message: ");
+                                    String content = Utility.readString(100);
+                                    //code a method, send this object message to server
+                                    messageClientService.sendMessageToOne(content, userId, getterId);
                                     break;
                                 case "4":
                                     System.out.println("Send file");

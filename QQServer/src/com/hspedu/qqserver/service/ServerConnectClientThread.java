@@ -19,6 +19,11 @@ public class ServerConnectClientThread extends Thread{
         this.userId = userId;
     }
 
+    //get current objcet socket
+    public Socket getSocket() {
+        return socket;
+    }
+
     @Override
     public void run() { //thread at run state, can send/receive message
         while (true) {
@@ -46,6 +51,12 @@ public class ServerConnectClientThread extends Thread{
                     ManageClientThreads.removeServerConnectClientThread(message.getSender());
                     socket.close(); //close connect
                     break; //break thread loop
+                }else if(message.getMesType().equals(MessageType.MESSAGE_COMM_MES)) {
+                    //according to message, request getter id, then get its related thread
+                    ServerConnectClientThread serverConnectClientThread = ManageClientThreads.getServerConnectClientThread(message.getGetter());
+                    //create objectoutputstream related to socket object, send message to infer client
+                    ObjectOutputStream oos = new ObjectOutputStream(serverConnectClientThread.getSocket().getOutputStream());
+                    oos.writeObject(message); //forward message, if client offline, store message to database, implement offline function
                 }
                 else {
                     System.out.println("Other types of message, not process temporary");
