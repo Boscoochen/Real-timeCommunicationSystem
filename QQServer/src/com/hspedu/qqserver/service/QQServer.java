@@ -50,6 +50,10 @@ public class QQServer {
         //port can be written in the configuration file
         try {
             System.out.println("Server listening at 9999 port...");
+
+            //start send news service
+            new Thread(new SendNewsToAllService()).start();
+
             ss = new ServerSocket(9999);
             while(true) { //when connected with one of the client, still keep listening, so use while loop
                 Socket socket = ss.accept(); //if there has no client connect, block here
