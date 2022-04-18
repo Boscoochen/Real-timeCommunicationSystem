@@ -6,6 +6,8 @@ import com.hspedu.qqcommon.MessageType;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * one of class object communicate with client
@@ -57,6 +59,21 @@ public class ServerConnectClientThread extends Thread{
                     //create objectoutputstream related to socket object, send message to infer client
                     ObjectOutputStream oos = new ObjectOutputStream(serverConnectClientThread.getSocket().getOutputStream());
                     oos.writeObject(message); //forward message, if client offline, store message to database, implement offline function
+                }else if(message.getMesType().equals(MessageType.MESSAGE_TO_ALL_MES)) {
+
+                    //need to iterate concurrenthashmap, get all socket from threads, then forward message to all users
+                    HashMap<String, ServerConnectClientThread> hm = ManageClientThreads.getHm();
+                    Iterator<String> iterator = hm.keySet().iterator();
+
+                    while (iterator.hasNext()) {
+                        //get online users
+                        String onLineUserId = iterator.next();
+                        if(!onLineUserId.equals(message.getSender())) { //forward message except sender himself
+                            //forward messages to online users
+                            ObjectOutputStream oos = new ObjectOutputStream(hm.get(onLineUserId).getSocket().getOutputStream());
+                            oos.writeObject(message);
+                        }
+                    }
                 }
                 else {
                     System.out.println("Other types of message, not process temporary");

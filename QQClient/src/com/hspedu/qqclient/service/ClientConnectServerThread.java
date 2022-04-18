@@ -38,6 +38,9 @@ public class ClientConnectServerThread extends Thread{
                     //display forward message from server to console
                     System.out.println("\n" + message.getSendTime() + ": " + message.getSender() + " to " + message.getGetter() + " message: " + message.getContent());
 
+                } else if(message.getMesType().equals(MessageType.MESSAGE_TO_ALL_MES)) { //group message
+                    //display forward message from server to console
+                    System.out.println("\n" + message.getSendTime() + ": " + message.getSender() + " to all" + " message: " + message.getContent());
                 }
                 else {
                     System.out.println("Other types of message, do nothing temporary...");

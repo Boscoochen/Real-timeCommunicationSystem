@@ -9,6 +9,11 @@ import java.util.Iterator;
 public class ManageClientThreads {
     private static HashMap<String, ServerConnectClientThread> hm = new HashMap<>();
 
+    //return
+    public static HashMap<String, ServerConnectClientThread> getHm() {
+        return hm;
+    }
+
     //put thread object into hashmap
     public static void addClientThread(String userId, ServerConnectClientThread serverConnectClientThread) {
         hm.put(userId, serverConnectClientThread);

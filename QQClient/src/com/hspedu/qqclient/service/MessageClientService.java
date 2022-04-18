@@ -35,4 +35,26 @@ public class MessageClientService {
         }
 
     }
+
+    /**
+     *
+     * @param content content
+     * @param senderId sender id
+     */
+    public void sendMessageToAll(String content, String senderId) {
+        Message message = new Message();
+        message.setMesType(MessageType.MESSAGE_TO_ALL_MES); //normal message
+        message.setSender(senderId);
+        message.setContent(content);
+        message.setSendTime(new Date().toString()); //set current time to message object
+        System.out.println(senderId + " to everyone" + " message: " + content);
+        //send to server
+        try {
+            ObjectOutputStream oos =
+                    new ObjectOutputStream(ManageClientConnectServerThread.getClientConnectServerThread(senderId).getSocket().getOutputStream());
+            oos.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

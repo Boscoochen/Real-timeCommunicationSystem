@@ -53,15 +53,18 @@ public class QQview {
                                     userClientService.onlineFriendList();
                                     break;
                                 case "2":
-                                    System.out.println("Group Sending Message");
+                                    System.out.println("Please enter message for group chatting: ");
+                                    String content = Utility.readString(100);
+                                    //call a method, encapsulate message object, send it to server
+                                    messageClientService.sendMessageToAll(content, userId);
                                     break;
                                 case "3":
                                     System.out.println("Please enter userId you want to chat with(online): ");
                                     String getterId = Utility.readString(50);
                                     System.out.println("Please enter message: ");
-                                    String content = Utility.readString(100);
+                                    String content_to_all = Utility.readString(100);
                                     //code a method, send this object message to server
-                                    messageClientService.sendMessageToOne(content, userId, getterId);
+                                    messageClientService.sendMessageToOne(content_to_all, userId, getterId);
                                     break;
                                 case "4":
                                     System.out.println("Send file");
