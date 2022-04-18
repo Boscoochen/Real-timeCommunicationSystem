@@ -1,6 +1,7 @@
 package com.hspedu.qqclient.view;
 
 
+import com.hspedu.qqclient.service.FileClientService;
 import com.hspedu.qqclient.service.MessageClientService;
 import com.hspedu.qqclient.service.UserClientService;
 import com.hspedu.qqclient.utils.Utility;
@@ -14,6 +15,7 @@ public class QQview {
     private String key = "";
     private UserClientService userClientService = new UserClientService(); //object is used to login/register user
     private MessageClientService messageClientService = new MessageClientService(); //for private/group chatting
+    private FileClientService fileClientService = new FileClientService(); // for sending file
 
     public static void main(String[] args) {
         new QQview().mainMenu();
@@ -67,7 +69,13 @@ public class QQview {
                                     messageClientService.sendMessageToOne(content_to_all, userId, getterId);
                                     break;
                                 case "4":
-                                    System.out.println("Send file");
+                                    System.out.print("Please enter userId you want send file to(online): ");
+                                    getterId = Utility.readString(50);
+                                    System.out.print("Please enter file path(format /Applications/user1/xx.txt): ");
+                                    String src = Utility.readString(100);
+                                    System.out.print("Please enter destination file path(format /Applications/user2/xx.txt):  ");
+                                    String dest = Utility.readString(100);
+                                    fileClientService.sendFileToOne(src, dest, userId, getterId);
                                     break;
                                 case "9":
                                     //call method, tell server to exit system

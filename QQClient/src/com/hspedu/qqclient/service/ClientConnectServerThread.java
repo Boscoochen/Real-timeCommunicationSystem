@@ -3,6 +3,7 @@ package com.hspedu.qqclient.service;
 import com.hspedu.qqcommon.Message;
 import com.hspedu.qqcommon.MessageType;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -41,6 +42,13 @@ public class ClientConnectServerThread extends Thread{
                 } else if(message.getMesType().equals(MessageType.MESSAGE_TO_ALL_MES)) { //group message
                     //display forward message from server to console
                     System.out.println("\n" + message.getSendTime() + ": " + message.getSender() + " to all" + " message: " + message.getContent());
+                } else if(message.getMesType().equals(MessageType.MESSAGE_FILE_MES)) { // message with file
+                    System.out.println("\n" + message.getSender() + " to " + message.getGetter() + " send file: " + message.getSrc() + " to my computer path " + message.getDest());
+                    //extract byte array of the file, write that into given computer path
+                    FileOutputStream fileOutputStream = new FileOutputStream(message.getDest());
+                    fileOutputStream.write(message.getFileBytes());
+                    fileOutputStream.close();
+                    System.out.println("save file succeed");
                 }
                 else {
                     System.out.println("Other types of message, do nothing temporary...");

@@ -74,6 +74,12 @@ public class ServerConnectClientThread extends Thread{
                             oos.writeObject(message);
                         }
                     }
+                } else if(message.getMesType().equals(MessageType.MESSAGE_FILE_MES)) {
+                    //according to getterid, request related thread, forward message to users
+                    ServerConnectClientThread serverConnectClientThread = ManageClientThreads.getServerConnectClientThread(message.getGetter());
+                    ObjectOutputStream oos = new ObjectOutputStream(serverConnectClientThread.getSocket().getOutputStream());
+                    //forward message
+                    oos.writeObject(message);
                 }
                 else {
                     System.out.println("Other types of message, not process temporary");

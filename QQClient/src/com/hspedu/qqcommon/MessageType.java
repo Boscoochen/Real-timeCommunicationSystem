@@ -9,4 +9,5 @@ public interface MessageType {
     String MESSAGE_RETURN_ONLINE_FRIEND = "5"; //return online user list
     String MESSAGE_CLIENT_EXIT = "6"; // user request exit
     String MESSAGE_TO_ALL_MES = "7"; //group message
+    String MESSAGE_FILE_MES = "8"; // send file
 }
